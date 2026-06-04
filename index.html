@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechAssist — Support Informatique à Distance</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
+    }
+  </script>
+  <style>
+    body { background: #050505; font-family: 'Inter', sans-serif; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #050505; }
+    ::-webkit-scrollbar-thumb { background: #262626; border-radius: 3px; }
+    
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 100ms; }
+    .reveal-delay-2 { transition-delay: 200ms; }
+    
+    @keyframes ping { 75%, 100% { transform: scale(2); opacity: 0; } }
+    @keyframes pulse-border { 0%, 100% { border-color: rgba(74,222,128,0.3); } 50% { border-color: rgba(74,222,128,0.8); } }
+    
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -2px; left: 0;
+      width: 0; height: 1px; background: #4ade80; transition: width 0.3s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+    html { scroll-behavior: smooth; }
+    
+    .toast {
+      transform: translateY(20px); opacity: 0;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+<body class="text-white antialiased overflow-x-hidden">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
+    <div class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
+      <a href="#hero" class="text-white text-sm font-medium tracking-tight flex items-center gap-2">
+        <i data-lucide="monitor-check" class="w-5 h-5"></i>
+        Tech<span class="text-neutral-400">Assist</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#services" class="nav-link relative text-xs font-medium uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Services</a>
+        <a href="#process" class="nav-link relative text-xs font-medium uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Comment ça marche</a>
+        <a href="#ticket" class="nav-link relative text-xs font-medium uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">Ouvrir un ticket</a>
+        <a href="#ticket" class="px-5 py-2.5 bg-green-500 text-black text-xs font-medium uppercase tracking-widest rounded-full hover:bg-green-400 transition-colors flex items-center gap-2">
+          <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-black opacity-75" style="animation: ping 1s cubic-bezier(0,0,0.2,1) infinite;"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-black"></span></span>
+          Assistance Live
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero" class="min-h-screen flex flex-col justify-center items-center px-6 pt-20 relative">
+    <div class="absolute inset-0 z-0">
+      <img src="https://picsum.photos/seed/tech-support-dark/1920/1080.jpg" alt="" class="w-full h-full object-cover opacity-15 grayscale contrast-125">
+      <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent"></div>
+    </div>
+
+    <div class="relative z-10 text-center max-w-5xl mx-auto">
+      <div class="reveal flex items-center justify-center gap-2 mb-8">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" style="animation: ping 1s cubic-bezier(0,0,0.2,1) infinite;"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+        </span>
+        <span class="text-xs font-medium tracking-widest uppercase text-green-400">Techniciens disponibles 24/7</span>
+      </div>
+
+      <h1 class="reveal reveal-delay-1 text-5xl md:text-7xl lg:text-8xl font-medium tracking-tight leading-[1]">
+        Dépannage PC<br>
+        <span class="bg-gradient-to-b from-white to-neutral-500 bg-clip-text text-transparent">à Distance</span>
+      </h1>
+
+      <p class="reveal reveal-delay-2 mt-8 text-lg md:text-xl font-light leading-relaxed text-neutral-400 max-w-2xl mx-auto">
+        Virus, lenteurs, pannes réseau, installations... Nos experts prennent le contrôle de votre machine à distance et résolvent vos problèmes en temps réel.
+      </p>
+
+      <div class="reveal reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4 mt-12">
+        <a href="#ticket" class="group px-8 py-3.5 bg-green-500 text-black text-xs font-medium uppercase tracking-widest rounded-full hover:bg-green-400 transition-colors flex items-center gap-2">
+          <i data-lucide="headset" class="w-4 h-4"></i>
+          Demander de l'aide
+        </a>
+        <a href="#process" class="px-8 py-3.5 border border-white/10 text-white text-xs font-medium uppercase tracking-widest rounded-full hover:border-white/30 transition-colors">
+          Comment ça marche
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="py-24 md:py-32 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="reveal mb-16 text-center">
+        <span class="text-[10px] font-medium uppercase tracking-widest text-green-400">Services</span>
+        <h2 class="mt-4 text-3xl md:text-5xl font-medium tracking-tight">Nos interventions</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="reveal group p-8 rounded-2xl border border-white/5 bg-neutral-900/30 hover:border-green-500/30 transition-all duration-500">
+          <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition-colors">
+            <i data-lucide="shield-alert" class="w-5 h-5 text-green-400"></i>
+          </div>
+          <h3 class="text-lg font-medium mb-3">Suppression de virus</h3>
+          <p class="text-sm text-neutral-400 font-light leading-relaxed">Analyse complète, suppression des malwares et installation d'un antivirus fiable.</p>
+        </div>
+
+        <div class="reveal reveal-delay-1 group p-8 rounded-2xl border border-white/5 bg-neutral-900/30 hover:border-green-500/30 transition-all duration-500">
+          <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition-colors">
+            <i data-lucide="gauge" class="w-5 h-5 text-green-400"></i>
+          </div>
+          <h3 class="text-lg font-medium mb-3">Optimisation PC</h3>
+          <p class="text-sm text-neutral-400 font-light leading-relaxed">Nettoyage des fichiers inutiles, gestion du démarrage et mise à jour des pilotes.</p>
+        </div>
+
+        <div class="reveal reveal-delay-2 group p-8 rounded-2xl border border-white/5 bg-neutral-900/30 hover:border-green-500/30 transition-all duration-500">
+          <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition-colors">
+            <i data-lucide="wifi" class="w-5 h-5 text-green-400"></i>
+          </div>
+          <h3 class="text-lg font-medium mb-3">Dépannage réseau</h3>
+          <p class="text-sm text-neutral-400 font-light leading-relaxed">Résolution des problèmes Wi-Fi, configuration box et sécurisation du réseau.</p>
+        </div>
+
+        <div class="reveal group p-8 rounded-2xl border border-white/5 bg-neutral-900/30 hover:border-green-500/30 transition-all duration-500">
+          <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition-colors">
+            <i data-lucide="hard-drive" class="w-5 h-5 text-green-400"></i>
+          </div>
+          <h3 class="text-lg font-medium mb-3">Sauvegarde de données</h3>
+          <p class="text-sm text-neutral-400 font-light leading-relaxed">Mise en place de sauvegardes automatiques et récupération de fichiers perdus.</p>
+        </div>
+
+        <div class="reveal reveal-delay-1 group p-8 rounded-2xl border border-white/5 bg-neutral-900/30 hover:border-green-500/30 transition-all duration-500">
+          <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition-colors">
+            <i data-lucide="printer" class="w-5 h-5 text-green-400"></i>
+          </div>
+          <h3 class="text-lg font-medium mb-3">Installation matériel</h3>
+          <p class="text-sm text-neutral-400 font-light leading-relaxed">Configuration imprimantes, scanners et périphériques sur votre ordinateur.</p>
+        </div>
+
+        <div class="reveal reveal-delay-2 group p-8 rounded-2xl border border-white/5 bg-neutral-900/30 hover:border-green-500/30 transition-all duration-500">
+          <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition-colors">
+            <i data-lucide="mail-warning" class="w-5 h-5 text-green-400"></i>
+          </div>
+          <h3 class="text-lg font-medium mb-3">Sécurité e-mail</h3>
+          <p class="text-sm text-neutral-400 font-light leading-relaxed">Protection contre le phishing, configuration Outlook et récupération de compte.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section id="process" class="py-24 md:py-32 px-6 border-t border-white/5">
+    <div class="max-w-7xl mx-auto">
+      <div class="reveal mb-16 text-center">
+        <span class="text-[10px] font-medium uppercase tracking-widest text-green-400">Processus</span>
+        <h2 class="mt-4 text-3xl md:text-5xl font-medium tracking-tight">3 étapes simples</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="reveal relative p-8 rounded-2xl border border-white/5 bg-neutral-900/30 text-center">
+          <div class="w-16 h-16 rounded-full bg-green-500/10 border border-green-500/30 flex items-center justify-center mx-auto mb-6" style="animation: pulse-border 2s infinite;">
+            <i data-lucide="ticket" class="w-7 h-7 text-green-400"></i>
+          </div>
+          <h3 class="text-lg font-medium mb-3">1. Ouvrez un ticket</h3>
+          <p class="text-sm text-neutral-400 font-light leading-relaxed">Décrivez votre problème via notre formulaire. Nous recevons la demande instantanément.</p>
+        </div>
+
+        <div class="reveal reveal-delay-1 relative p-8 rounded-2xl border border-white/5 bg-neutral-900/30 text-center">
+          <div class="w-16 h-16 rounded-full bg-green-500/10 border border-green-500/30 flex items-center justify-center mx-auto mb-6" style="animation: pulse-border 2s infinite 0.5s;">
+            <i data-lucide="phone-call" class="w-7 h-7 text-green-400"></i>
+          </div>
+          <h3 class="text-lg font-medium mb-3">2. Un technicien vous contacte</h3>
+          <p class="text-sm text-neutral-400 font-light leading-relaxed">Sous 15 minutes, un expert vous appelle et vous guide pour la prise en main à distance.</p>
+        </div>
+
+        <div class="reveal reveal-delay-2 relative p-8 rounded-2xl border border-white/5 bg-neutral-900/30 text-center">
+          <div class="w-16 h-16 rounded-full bg-green-500/10 border border-green-500/30 flex items-center justify-center mx-auto mb-6" style="animation: pulse-border 2s infinite 1s;">
+            <i data-lucide="check-circle-2" class="w-7 h-7 text-green-400"></i>
+          </div>
+          <h3 class="text-lg font-medium mb-3">3. Problème résolu !</h3>
+          <p class="text-sm text-neutral-400 font-light leading-relaxed">Le technicien résout le problème en direct. Vous repartez avec un PC fonctionnel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ticket System -->
+  <section id="ticket" class="py-24 md:py-32 px-6">
+    <div class="max-w-3xl mx-auto">
+      <div class="reveal text-center mb-12">
+        <span class="text-[10px] font-medium uppercase tracking-widest text-green-400">Assistance</span>
+        <h2 class="mt-4 text-3xl md:text-5xl font-medium tracking-tight">Ouvrir un ticket</h2>
+        <p class="mt-4 text-neutral-400 font-light">Décrivez votre problème, nous vous recontactons sous 15 minutes.</p>
+      </div>
+
+      <form id="ticketForm" class="reveal space-y-6 p-8 md:p-10 rounded-2xl border border-white/5 bg-neutral-900/30">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label class="text-xs uppercase tracking-widest text-neutral-500 mb-2 block">Nom complet</label>
+            <input type="text" id="clientName" required class="w-full bg-neutral-900/50 border border-white/5 rounded-xl px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:border-green-500/50 focus:outline-none transition-colors" placeholder="Jean Dupont">
+          </div>
+          <div>
+            <label class="text-xs uppercase tracking-widest text-neutral-500 mb-2 block">Téléphone</label>
+            <input type="tel" id="clientPhone" required class="w-full bg-neutral-900/50 border border-white/5 rounded-xl px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:border-green-500/50 focus:outline-none transition-colors" placeholder="+33 6 12 34 56 78">
+          </div>
+        </div>
+        <div>
+          <label class="text-xs uppercase tracking-widest text-neutral-500 mb-2 block">Email</label>
+          <input type="email" id="clientEmail" required class="w-full bg-neutral-900/50 border border-white/5 rounded-xl px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:border-green-500/50 focus:outline-none transition-colors" placeholder="jean@email.com">
+        </div>
+        <div>
+          <label class="text-xs uppercase tracking-widest text-neutral-500 mb-2 block">Type de problème</label>
+          <select id="issueType" class="w-full bg-neutral-900/50 border border-white/5 rounded-xl px-4 py-3 text-sm text-white focus:border-green-500/50 focus:outline-none transition-colors appearance-none cursor-pointer">
+            <option value="virus" class="bg-neutral-900">Virus / Malware</option>
+            <option value="lenteur" class="bg-neutral-900">PC lent</option>
+            <option value="reseau" class="bg-neutral-900">Problème réseau / Wi-Fi</option>
+            <option value="installation" class="bg-neutral-900">Installation logiciel</option>
+            <option value="sauvegarde" class="bg-neutral-900">Récupération de données</option>
+            <option value="autre" class="bg-neutral-900">Autre</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs uppercase tracking-widest text-neutral-500 mb-2 block">Description du problème</label>
+          <textarea id="issueDesc" required rows="4" class="w-full bg-neutral-900/50 border border-white/5 rounded-xl px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:border-green-500/50 focus:outline-none transition-colors resize-none" placeholder="Décrivez votre problème en détail..."></textarea>
+        </div>
+        <button type="submit" class="group w-full px-8 py-3.5 bg-green-500 text-black text-xs font-medium uppercase tracking-widest rounded-full hover:bg-green-400 transition-colors flex items-center justify-center gap-2">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          Envoyer la demande d'assistance
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/5 py-12 px-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2 text-sm font-medium">
+        <i data-lucide="monitor-check" class="w-5 h-5 text-green-400"></i>
+        TechAssist
+      </div>
+      <p class="text-xs text-neutral-600">© 2024 TechAssist. Support informatique à distance.</p>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div id="toast" class="toast fixed bottom-8 left-1/2 -translate-x-1/2 z-[70] px-6 py-3 bg-green-500 text-black text-sm font-medium rounded-full flex items-center gap-2 shadow-lg">
+    <i data-lucide="check-circle" class="w-4 h-4"></i>
+    <span id="toastMsg">Ticket créé avec succès !</span>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Toast
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+
+    // ==========================================
+    // BASE DE DONNÉES - LOGIQUE SUPABASE
+    // ==========================================
+    
+    // REMPLACEZ CES VALEURS PAR VOS CLÉS SUPABASE (Étape 3 du guide)
+    const SUPABASE_URL = 'https://luxkvzpuxdnonlsvlwqz.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1eGt2enB1eGRub25sc3Zsd3F6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA1NjMyMzksImV4cCI6MjA5NjEzOTIzOX0.sloR4iJ_uhRrZQWUzhmYF8_VMorvI4_IogWuWu1jlfw';
+
+    let supabaseClient = null;
+    
+    try {
+      if (SUPABASE_URL !== 'VOTRE_SUPABASE_URL') {
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      }
+    } catch(e) {
+      console.log("Supabase non configuré");
+    }
+
+    document.getElementById('ticketForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const ticketData = {
+        name: document.getElementById('clientName').value,
+        phone: document.getElementById('clientPhone').value,
+        email: document.getElementById('clientEmail').value,
+        issue_type: document.getElementById('issueType').value,
+        description: document.getElementById('issueDesc').value,
+        status: 'ouvert'
+      };
+
+      if (supabaseClient) {
+        // Envoi vers Supabase
+        const { data, error } = await supabaseClient
+          .from('tickets')
+          .insert([ticketData]);
+
+        if (error) {
+          showToast("Erreur de connexion à la base de données");
+          console.error(error);
+          return;
+        }
+        showToast('Ticket enregistré ! Nous vous contactons sous 15 min.');
+      } else {
+        // Mode démo si Supabase n'est pas configuré
+        showToast('Mode démo : Ticket simulé ! Configurez Supabase pour la sauvegarde.');
+      }
+      
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
