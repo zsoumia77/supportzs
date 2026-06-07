@@ -42,13 +42,16 @@
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* SOLUTION APPLIQUÉE : Déplacement du bouton MemberSpace à gauche */
+    #ms-member-button-iframe {
+        right: auto !important;
+        left: 20px !important;
+    }
   </style>
+  
+  <!-- Script MemberSpace -->
   <script> var MemberSpace = window.MemberSpace || {"subdomain":"supportzs"}; (function(d){ var s = d.createElement("script"); s.src = "https://cdn.memberspace.com/scripts/widgets.js"; var e = d.getElementsByTagName("script")[0]; e.parentNode.insertBefore(s,e); }(document)); </script>
-/* Déplace le bouton automatique de MemberSpace vers la gauche */
-#ms-member-button-iframe {
-    right: auto !important;
-    left: 20px !important;
-}
 </head>
 <body class="text-white antialiased overflow-x-hidden">
 
@@ -250,35 +253,35 @@
       </form>
     </div>
   </section>
-<!-- Prise en main à distance -->
-<section class="py-24 md:py-32 px-6 border-t border-white/5">
-  <div class="max-w-7xl mx-auto text-center">
-    <span class="text-[10px] font-medium uppercase tracking-widest text-green-400">Téléchargement</span>
-    <h2 class="mt-4 text-3xl md:text-5xl font-medium tracking-tight">Prise en main à distance</h2>
-    <p class="mt-4 text-neutral-400 font-light max-w-xl mx-auto">Notre technicien vous a demandé de télécharger l'outil de prise en main ? Cliquez sur le bouton ci-dessous pour démarrer le téléchargement sécurisé.</p>
 
-    <div class="mt-12 flex items-center justify-center">
+  <!-- Prise en main à distance -->
+  <section class="py-24 md:py-32 px-6 border-t border-white/5">
+    <div class="max-w-7xl mx-auto text-center">
+      <span class="text-[10px] font-medium uppercase tracking-widest text-green-400">Téléchargement</span>
+      <h2 class="mt-4 text-3xl md:text-5xl font-medium tracking-tight">Prise en main à distance</h2>
+      <p class="mt-4 text-neutral-400 font-light max-w-xl mx-auto">Notre technicien vous a demandé de télécharger l'outil de prise en main ? Cliquez sur le bouton ci-dessous pour démarrer le téléchargement sécurisé.</p>
+
+      <div class="mt-12 flex items-center justify-center">
+        <!-- Bouton RustDesk -->
+        <a href="https://rustdesk.com/fr/" target="_blank" class="group w-full max-w-md px-8 py-6 bg-neutral-900/50 border border-white/10 rounded-2xl hover:border-green-500/30 transition-all duration-500 flex items-center gap-5">
+          <div class="w-14 h-14 rounded-xl bg-green-500/10 flex items-center justify-center shrink-0 group-hover:bg-green-500/20 transition-colors">
+            <i data-lucide="download" class="w-7 h-7 text-green-400"></i>
+          </div>
+          <div class="text-left">
+            <div class="text-base font-medium">Télécharger RustDesk</div>
+            <div class="text-sm text-neutral-500 mt-1">Compatible Windows, Mac et Linux</div>
+          </div>
+        </a>
+      </div>
       
-      <!-- Bouton RustDesk -->
-      <a href="https://rustdesk.com/fr/" target="_blank" class="group w-full max-w-md px-8 py-6 bg-neutral-900/50 border border-white/10 rounded-2xl hover:border-green-500/30 transition-all duration-500 flex items-center gap-5">
-        <div class="w-14 h-14 rounded-xl bg-green-500/10 flex items-center justify-center shrink-0 group-hover:bg-green-500/20 transition-colors">
-          <i data-lucide="download" class="w-7 h-7 text-green-400"></i>
-        </div>
-        <div class="text-left">
-          <div class="text-base font-medium">Télécharger RustDesk</div>
-          <div class="text-sm text-neutral-500 mt-1">Compatible Windows, Mac et Linux</div>
-        </div>
-      </a>
-
+      <!-- Info sécurité -->
+      <p class="mt-8 text-xs text-neutral-600 max-w-md mx-auto flex items-center justify-center gap-2">
+        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-neutral-600"></i>
+        Logiciel sûr et open-source. Vous pouvez fermer la session à tout moment.
+      </p>
     </div>
-    
-    <!-- Info sécurité -->
-    <p class="mt-8 text-xs text-neutral-600 max-w-md mx-auto flex items-center justify-center gap-2">
-      <i data-lucide="shield-check" class="w-3.5 h-3.5 text-neutral-600"></i>
-      Logiciel sûr et open-source. Vous pouvez fermer la session à tout moment.
-    </p>
-  </div>
-</section>
+  </section>
+
   <!-- Footer -->
   <footer class="border-t border-white/5 py-12 px-6">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
@@ -313,11 +316,7 @@
       setTimeout(() => toast.classList.remove('show'), 4000);
     }
 
-    // ==========================================
-    // BASE DE DONNÉES - LOGIQUE SUPABASE
-    // ==========================================
-    
-    // REMPLACEZ CES VALEURS PAR VOS CLÉS SUPABASE (Étape 3 du guide)
+    // Logic Supabase
     const SUPABASE_URL = 'https://luxkvzpuxdnonlsvlwqz.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1eGt2enB1eGRub25sc3Zsd3F6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA1NjMyMzksImV4cCI6MjA5NjEzOTIzOX0.sloR4iJ_uhRrZQWUzhmYF8_VMorvI4_IogWuWu1jlfw';
 
@@ -344,7 +343,6 @@
       };
 
       if (supabaseClient) {
-        // Envoi vers Supabase
         const { data, error } = await supabaseClient
           .from('tickets')
           .insert([ticketData]);
@@ -356,25 +354,25 @@
         }
         showToast('Ticket enregistré ! Nous vous contactons sous 15 min.');
       } else {
-        // Mode démo si Supabase n'est pas configuré
         showToast('Mode démo : Ticket simulé ! Configurez Supabase pour la sauvegarde.');
       }
       
       e.target.reset();
     });
   </script>
+
   <!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/6a218acca7b9da1c346302f0/1jq9gcccd';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
+  <script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/6a218acca7b9da1c346302f0/1jq9gcccd';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+  })();
+  </script>
+  <!--End of Tawk.to Script-->
 </body>
 </html>
