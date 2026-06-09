@@ -42,14 +42,13 @@
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .toast.show { transform: translateY(0); opacity: 1; }
-
-    /* Le bouton flottant par défaut est désactivé directement depuis le panel MemberSpace */
   </style>
   
   <script> var MemberSpace = window.MemberSpace || {"subdomain":"supportzs"}; (function(d){ var s = d.createElement("script"); s.src = "https://cdn.memberspace.com/scripts/widgets.js"; var e = d.getElementsByTagName("script")[0]; e.parentNode.insertBefore(s,e); }(document)); </script>
 </head>
 <body class="text-white antialiased overflow-x-hidden">
 
+  <!-- NAVIGATION -->
   <nav class="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
     <div class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
       <a href="#hero" class="text-white text-sm font-medium tracking-tight flex items-center gap-2">
@@ -73,6 +72,7 @@
     </div>
   </nav>
 
+  <!-- HERO SECTION -->
   <section id="hero" class="min-h-screen flex flex-col justify-center items-center px-6 pt-20 relative">
     <div class="absolute inset-0 z-0">
       <img src="https://picsum.photos/seed/tech-support-dark/1920/1080.jpg" alt="" class="w-full h-full object-cover opacity-15 grayscale contrast-125">
@@ -109,35 +109,9 @@
         </a>
       </div>
     </div>
-
-    <section class="py-16 px-4 bg-black">
-  <div class="text-center py-12 bg-neutral-900/50 rounded-2xl border border-white/5 max-w-xl mx-auto px-6 backdrop-blur-sm">
-    
-    <div class="flex justify-center gap-1 text-amber-400 mb-4">
-      <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
-      <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
-      <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
-      <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
-      <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
-    </div>
-    
-    <h3 class="text-xl font-semibold text-white mb-2">Vous êtes satisfait de nos services ?</h3>
-    <p class="text-sm text-neutral-400 mb-8 font-light max-w-sm mx-auto">
-      Soutenez notre activité en laissant une note et un commentaire rapide sur notre fiche Google.
-    </p>
-    
-    <a href="https://g.page/r/CU5KxL2qrKoPEAE/review" 
-       target="_blank" 
-       rel="noopener noreferrer" 
-       class="inline-flex items-center gap-2 px-6 py-3 bg-white text-black text-xs font-bold uppercase tracking-widest rounded-full hover:bg-neutral-200 transition-all transform hover:scale-105 duration-200 shadow-lg">
-      <i data-lucide="message-square-plus" class="w-4 h-4"></i>
-      Laisser un avis Google
-    </a>
-
-  </div>
-</section>
   </section>
 
+  <!-- SERVICES SECTION -->
   <section id="services" class="py-24 md:py-32 px-6">
     <div class="max-w-7xl mx-auto">
       <div class="reveal mb-16 text-center">
@@ -197,6 +171,7 @@
     </div>
   </section>
 
+  <!-- PROCESS SECTION -->
   <section id="process" class="py-24 md:py-32 px-6 border-t border-white/5">
     <div class="max-w-7xl mx-auto">
       <div class="reveal mb-16 text-center">
@@ -232,6 +207,7 @@
     </div>
   </section>
 
+  <!-- TICKET SECTION -->
   <section id="ticket" class="py-24 md:py-32 px-6">
     <div class="max-w-3xl mx-auto">
       <div class="reveal text-center mb-12">
@@ -278,6 +254,7 @@
     </div>
   </section>
 
+  <!-- DOWNLOAD SECTION -->
   <section class="py-24 md:py-32 px-6 border-t border-white/5">
     <div class="max-w-7xl mx-auto text-center">
       <span class="text-[10px] font-medium uppercase tracking-widest text-green-400">Téléchargement</span>
@@ -303,6 +280,38 @@
     </div>
   </section>
 
+  <!-- SECTION AVIS GOOGLE (PLUGUÉE PROPREMENT ICI) -->
+  <section class="py-16 px-6 bg-[#050505] border-t border-white/5">
+    <div class="reveal text-center py-12 bg-neutral-900/30 rounded-2xl border border-white/5 max-w-xl mx-auto px-6 backdrop-blur-sm">
+      
+      <!-- Étoiles -->
+      <div class="flex justify-center gap-1 text-amber-400 mb-4">
+        <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+        <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+        <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+        <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+        <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+      </div>
+      
+      <!-- Textes -->
+      <h3 class="text-xl font-semibold text-white mb-2">Vous êtes satisfait de nos services ?</h3>
+      <p class="text-sm text-neutral-400 mb-8 font-light max-w-sm mx-auto">
+        Soutenez notre activité en laissant une note et un commentaire rapide sur notre fiche Google.
+      </p>
+      
+      <!-- Bouton -->
+      <a href="https://g.page/r/CU5KxL2qrKoPEAE/review" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         class="inline-flex items-center gap-2 px-6 py-3 bg-white text-black text-xs font-bold uppercase tracking-widest rounded-full hover:bg-neutral-200 transition-all transform hover:scale-105 duration-200 shadow-lg">
+        <i data-lucide="message-square-plus" class="w-4 h-4"></i>
+        Laisser un avis Google
+      </a>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer class="border-t border-white/5 py-12 px-6">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-2 text-sm font-medium">
@@ -313,11 +322,13 @@
     </div>
   </footer>
 
+  <!-- TOAST NOTIFICATION -->
   <div id="toast" class="toast fixed bottom-8 left-1/2 -translate-x-1/2 z-[70] px-6 py-3 bg-green-500 text-black text-sm font-medium rounded-full flex items-center gap-2 shadow-lg">
     <i data-lucide="check-circle" class="w-4 h-4"></i>
     <span id="toastMsg">Ticket créé avec succès !</span>
   </div>
 
+  <!-- SCRIPTS LOGIQUE JS -->
   <script>
     lucide.createIcons();
 
@@ -380,6 +391,7 @@
     });
   </script>
 
+  <!-- TAWK.TO SCRIPT -->
   <script type="text/javascript">
   var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
   (function(){
@@ -391,5 +403,5 @@
   s0.parentNode.insertBefore(s1,s0);
   })();
   </script>
-  </body>
+</body>
 </html>
